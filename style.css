@@ -66,7 +66,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  z-index: 100;
+  z-index: 9999;
 }
 
 .theme-toggle:hover {
@@ -108,6 +108,12 @@ body {
   position: relative;
 }
 
+/* Garante que o conteúdo fique acima do canvas */
+.layout, main, aside, section, fieldset, .barra, footer {
+  position: relative;
+  z-index: 1;
+}
+
 /* Matrix Rain Background */
 #matrix-canvas {
   position: fixed;
@@ -115,7 +121,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
   opacity: 0.25;
   pointer-events: none;
 }
@@ -136,21 +142,28 @@ ul {
 }
 
 header {
-  background: linear-gradient(135deg, var(--surface) 0%, var(--primary-soft) 100%);
-  padding: 24px 20px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--primary-soft) 50%, var(--accent-soft) 100%);
+  padding: 20px 24px;
   text-align: center;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
   position: sticky;
   top: 0;
   width: 100%;
   z-index: 50;
   border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+[data-theme="dark"] header {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(30, 58, 95, 0.95) 50%, rgba(46, 16, 101, 0.95) 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .index2 {
   background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
   color: #ffffff !important;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
   border: none;
 }
 
@@ -161,28 +174,42 @@ header {
 .index2:hover {
   background: linear-gradient(135deg, var(--primary-strong) 0%, #6d28d9 100%);
   color: #ffffff !important;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
 }
 
 header h1 {
   margin: 0;
-  font-size: clamp(22px, 3vw, 36px);
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 800;
+  color: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -0.4px;
+  color: transparent;
+  letter-spacing: -0.5px;
+  text-shadow: none;
 }
 
 nav ul {
-  margin-top: 14px;
+  margin-top: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
+  padding: 6px;
+  background: var(--surface-muted);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+[data-theme="dark"] nav ul {
+  background: rgba(51, 65, 85, 0.5);
 }
 
 nav li {
@@ -191,21 +218,23 @@ nav li {
 
 nav a {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-light);
-  padding: 10px 18px;
+  padding: 10px 20px;
   border-radius: var(--radius-pill);
   background: transparent;
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
+  border: none;
+  transition: all 0.25s ease;
   position: relative;
+  display: inline-block;
 }
 
 nav a:hover {
   color: var(--primary);
-  background-color: var(--primary-soft);
-  border-color: var(--primary-soft);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-sm);
   cursor: pointer;
+  transform: translateY(-1px);
 }
 
 
@@ -542,19 +571,236 @@ footer a:hover img {
     width: 140px;
     height: 140px;
   }
+  
+  .barra {
+    position: relative;
+    top: 0;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-  nav li {
-    width: auto;
+  :root {
+    --space: 16px;
+  }
+  
+  header {
+    padding: 12px 10px;
   }
   
   header h1 {
-    font-size: 20px;
+    font-size: 16px;
+    letter-spacing: -0.3px;
+  }
+  
+  nav ul {
+    gap: 4px;
+    padding: 4px;
+    margin-top: 10px;
+  }
+  
+  nav a {
+    font-size: 11px;
+    padding: 7px 12px;
+  }
+  
+  .index2 {
+    padding: 7px 12px;
   }
   
   .layout {
-    padding: 0 16px;
+    padding: 0 12px;
+    margin: 16px auto 80px;
+    gap: 16px;
+  }
+  
+  fieldset {
+    padding: 20px 16px;
+  }
+  
+  legend {
+    font-size: 16px;
+  }
+  
+  .barra {
+    padding: 20px 16px;
+  }
+  
+  .barra h2 {
+    font-size: 1.1rem;
+  }
+  
+  .barra p {
+    font-size: 0.9rem;
+  }
+  
+  .profile {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .intro-card {
+    padding: 16px;
+  }
+  
+  .intro-title {
+    font-size: 1rem;
+  }
+  
+  .intro-text {
+    font-size: 0.9rem;
+  }
+  
+  section p {
+    font-size: 0.9rem;
+  }
+  
+  /* Tabs mobile */
+  .ficha {
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px;
+  }
+  
+  .aba a {
+    padding: 8px 12px;
+    min-width: auto;
+    font-size: 12px;
+  }
+  
+  .tab-content {
+    height: auto;
+    min-height: 300px;
+  }
+  
+  .tab-content p {
+    padding-bottom: 60px;
+  }
+  
+  /* Badge mobile */
+  .badge {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 16px;
+    display: block;
+    width: fit-content;
+  }
+  
+  /* Cursos mobile */
+  .curso-card {
+    padding: 16px;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .curso-link {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .curso-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+  }
+  
+  .curso-info h3 {
+    font-size: 0.95rem;
+  }
+  
+  .curso-badge {
+    margin-top: 8px;
+  }
+  
+  /* Contato mobile */
+  #contato {
+    padding: 20px 16px;
+  }
+  
+  #contato .contact-link {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+  
+  /* Footer mobile */
+  footer {
+    padding: 16px 12px;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  footer a {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  
+  /* Theme toggle mobile */
+  .theme-toggle {
+    width: 44px;
+    height: 44px;
+    bottom: 16px;
+    right: 16px;
+  }
+  
+  .theme-toggle svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  header {
+    padding: 10px 8px;
+  }
+  
+  header h1 {
+    font-size: 14px;
+    letter-spacing: -0.2px;
+  }
+  
+  nav ul {
+    gap: 3px;
+    padding: 3px;
+    margin-top: 8px;
+  }
+  
+  nav a {
+    font-size: 10px;
+    padding: 6px 10px;
+  }
+  
+  .index2 {
+    padding: 6px 10px;
+  }
+  
+  .layout {
+    padding: 0 10px;
+  }
+  
+  fieldset {
+    padding: 16px 12px;
+  }
+  
+  .profile {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .barra h2 {
+    font-size: 1rem;
+  }
+  
+  .tab-content p {
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+  
+  .curso-info h3 {
+    font-size: 0.9rem;
+  }
+  
+  .curso-instituicao, .curso-data {
+    font-size: 0.8rem;
   }
 }
 
@@ -723,18 +969,6 @@ footer a:hover img {
   border-color: #92400e;
 }
 
-@media only screen and (max-width: 600px) {
-  .curso-card {
-    flex-wrap: wrap;
-  }
-  
-  .curso-badge {
-    width: 100%;
-    text-align: center;
-    margin-top: 8px;
-  }
-}
-
 /* Melhorias de Tipografia */
 section p {
   font-size: 1rem;
@@ -773,7 +1007,8 @@ section u a:hover {
   display: none; 
   opacity: 0; 
   transition: opacity 0.3s ease-in-out;
-  height: 380px;
+  min-height: 300px;
+  height: auto;
   padding: 0;
   position: relative;
   overflow: visible;

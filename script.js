@@ -24,8 +24,13 @@ function setupThemeToggle() {
     document.body.appendChild(toggleBtn);
 
     // Carrega tema salvo ou usa preferência do sistema
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let savedTheme = null;
+    try {
+        savedTheme = localStorage.getItem('theme');
+    } catch (e) {
+        // localStorage não disponível (modo privado/bloqueado)
+    }
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     
     if (savedTheme) {
         document.documentElement.setAttribute('data-theme', savedTheme);
@@ -39,7 +44,11 @@ function setupThemeToggle() {
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         
         document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
+        try {
+            localStorage.setItem('theme', newTheme);
+        } catch (e) {
+            // localStorage não disponível
+        }
     });
 }
 
@@ -130,6 +139,7 @@ function setupMatrixRain() {
     document.body.insertBefore(canvas, document.body.firstChild);
     
     const ctx = canvas.getContext('2d');
+    if (!ctx) return; // Fallback se canvas não for suportado
     
     // Configura tamanho
     function resize() {
@@ -148,7 +158,13 @@ function setupMatrixRain() {
     
     // Tenta recuperar estado salvo ou cria novo
     let drops = [];
-    const savedDrops = sessionStorage.getItem('matrixDrops');
+    let savedDrops = null;
+    
+    try {
+        savedDrops = sessionStorage.getItem('matrixDrops');
+    } catch (e) {
+        // sessionStorage não disponível
+    }
     
     if (savedDrops) {
         try {
@@ -161,7 +177,7 @@ function setupMatrixRain() {
                     drops[i] = Math.random() * -100;
                 }
             }
-        } catch {
+        } catch (e) {
             for (let i = 0; i < columns; i++) {
                 drops[i] = Math.random() * -100;
             }
@@ -174,13 +190,21 @@ function setupMatrixRain() {
     
     // Salva estado antes de sair da página
     window.addEventListener('beforeunload', () => {
-        sessionStorage.setItem('matrixDrops', JSON.stringify(drops));
+        try {
+            sessionStorage.setItem('matrixDrops', JSON.stringify(drops));
+        } catch (e) {
+            // sessionStorage não disponível
+        }
     });
     
     // Também salva ao clicar em links de navegação
     document.querySelectorAll('nav a').forEach(link => {
         link.addEventListener('click', () => {
-            sessionStorage.setItem('matrixDrops', JSON.stringify(drops));
+            try {
+                sessionStorage.setItem('matrixDrops', JSON.stringify(drops));
+            } catch (e) {
+                // sessionStorage não disponível
+            }
         });
     });
     
