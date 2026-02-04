@@ -5,73 +5,78 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My web site - Novidades</title>
+  <title>Bruno Scalercio - Novidades</title>
   <link rel="stylesheet" href="style.css">
   <link rel="shortcut icon" href="favicon-16x16.png" type="image/png">
-</head>
-<header>
-  <h1>Bruno Scalercio M. B. da Fonseca</h1>
-  <nav>
-    <ul>
-      <li><a href="index.html">Sobre</a></li>
-      <li><a class="index2" href="index2.html">Novidades</a></li>
-      <li><a href="index3.html">Contato</a></li>
-    </ul>
-  </nav>
-</header>
+ </head>
 
 <body>
-  <main>
-    <aside class="barra" style="float:left; margin-left: -70%; width: 50%; background-color:rgb(223, 223, 223); font-size: 120%;">
-      <p style="margin-top: 9%;  text-align: center;" > &nbsp; &nbsp; <strong style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 110%;">Bem-vindo(a) à minha página pessoal!</strong></p> <br> 
-      <p> &nbsp;&nbsp; Aqui você encontrará informações sobre mim, meus <u style="color: rgb(196, 0, 0);">projetos</u> e <u style="color: red;">atualizações</u>
+  <header>
+    <h1>Bruno Scalercio M. B. da Fonseca</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Sobre</a></li>
+        <li><a class="index2" href="index2.html">Novidades</a></li>
+        <li><a href="index3.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <aside class="intro-card">
+      <p class="intro-title">Bem-vindo(a) à minha página pessoal!</p>
+      <p class="intro-text">&nbsp;&nbsp; Aqui você encontrará informações sobre mim, meus <u>projetos</u> e <u>atualizações</u>
         sobre o meu <strong>futuro</strong>. <br> &nbsp;&nbsp; Este site será constantemente atualizado com novidades sobre as minhas conquistas,
         mudanças na minha carreira e atualizações sobre os meus projetos atuais. <br> &nbsp;&nbsp; Sinta-se à vontade para explorar o
-        site e ficar por dentro das novidades. Obrigado por visitar e acompanhar a minha jornada!</p> 
+        site e ficar por dentro das novidades. Obrigado por visitar e acompanhar a minha jornada!</p>
     </aside>
     <section>
       <article>
-        <div style="margin-top:3%; margin-left: -6%;">
+        <div>
           <fieldset>
-            <legend class="pag2">
+            <legend>
               <ul class="ficha">
-                <label for="aba">
-                  <li class="aba" id="ativo"><a style="color: white;" href="index2.html">Projeto 1</a></li>
-                </label>
-                <label for="aba">
-                  <li class="aba" id="index2"><a href="index2x1.html">Projeto 2</a></li>
-                </label>
-                <label for="aba">
-                  <li class="aba" id="index2"><a href="index2x2.html">Projeto 3</a></li>
-                </label>
+                <li class="aba" id="ativo"><a href="index2.html">Projeto 1</a></li>
+                <li class="aba" id="index2"><a href="index2x1.html">Projeto 2</a></li>
+                <li class="aba" id="index2"><a href="index2x2.html">Projeto 3</a></li>
               </ul>
             </legend>
             
-            <p>
-              &nbsp;&nbsp; Atualmente, estou cursando faculdade de Ciência da Computação e estou muito animado com essa
-              escolha. Para mim, a tecnologia é fascinante e estou ansioso para aprender mais sobre o campo da computação,
-            programação e desenvolvimento de software. Espero aproveitar ao máximo o meu tempo na faculdade, trabalhando
-            duro para desenvolver minhas habilidades técnicas e ampliar meu conhecimento em áreas como inteligência
-            artificial, machine learning e cibersegurança.
-            <br> <br>
-            &nbsp; &nbsp; Eu sei que a faculdade de Ciência da Computação pode ser desafiadora, mas estou disposto a me
-            dedicar e a enfrentar esses desafios de frente. Estou ansioso para participar de projetos práticos,
-            colaborar e
-            me envolver em atividades extracurriculares que possam me ajudar a aprimorar as minhas habilidades. Além
-            disso,
-            estou animado com as oportunidades de estágio e emprego que a área de Ciência da Computação pode oferecer e
-            estou determinado a construir uma carreira de sucesso nesse campo.
-          </p>
-          <br>
-          <p
-            style=" height: 20px; border-radius:8px ; border: 2px black solid; text-align: center; font-size: 110%; font-family: Georgia, 'Times New Roman', Times, serif;">
-            . . . EM
-            DESENVOLVIMENTO . . .</p>
-        </fieldset>
-      </div>
+            <div id="projeto1" class="tab-content active-content">
+              <p>
+                &nbsp;&nbsp; Atualmente, estou cursando Ciência da Computação na <strong>Universidade Veiga de Almeida</strong>, onde iniciei minha jornada em janeiro de 2023 com previsão de conclusão em janeiro de 2027. Para mim, a tecnologia é fascinante e estou ansioso para aprender mais sobre o campo da computação, programação e desenvolvimento de software.
+              <br> <br>
+              &nbsp; &nbsp; Durante o curso, tenho desenvolvido habilidades em diversas linguagens de programação como <strong>Python, Java, C, C++, C#, PHP e JavaScript</strong>. Estou trabalhando duro para ampliar meu conhecimento em áreas como inteligência artificial, machine learning e cibersegurança, participando de projetos práticos e atividades extracurriculares que me ajudam a aprimorar minhas habilidades técnicas. Estou determinado a construir uma carreira de sucesso nesse campo.
+              </p>
+              <div class="badge badge-progress">Em Desenvolvimento</div>
+            </div>
+
+            <div id="projeto2" class="tab-content">
+              <p>
+                 &nbsp; &nbsp; No futuro, tenho o objetivo de aprender a falar inglês fluentemente como se fosse um projeto
+                pessoal. Para isso, pretendo me dedicar diariamente à prática da língua, buscando recursos como cursos online,
+                livros, filmes e séries em inglês.
+                <br><br> &nbsp;&nbsp; Também pretendo fazer intercâmbios e buscar oportunidades de imersão na
+                língua, para que possa aprimorar minha compreensão oral e habilidades de conversação. Acredito que o aprendizado
+                de uma nova língua é um processo constante e desafiador, mas estou determinado a alcançar esse objetivo e me
+                tornar fluente em inglês.</p>
+              <div class="badge badge-todo">Para Fazer</div>
+            </div>
+
+            <div id="projeto3" class="tab-content">
+               <p>
+                &nbsp;&nbsp; Um dos meus grandes objetivos para o futuro é ingressar na indústria de Game Development e desenvolver o meu próprio jogo. Desde pequeno, os jogos sempre me fascinaram não apenas como entretenimento, mas como uma forma poderosa de contar histórias e criar experiências interativas únicas que conectam pessoas ao redor do mundo. Acredito que os games representam a união perfeita entre arte, narrativa envolvente e lógica de programação — uma combinação que me motiva a cada dia.
+                <br><br>
+                &nbsp;&nbsp; Estou ciente dos desafios técnicos que essa jornada envolve, desde o domínio de engines como Unity e Unreal até o design de mecânicas envolventes e sistemas de gameplay balanceados. Por isso, sigo me preparando constantemente, estudando as bases necessárias em programação, design de jogos e experiência do usuário para transformar essa visão em realidade. Meu objetivo é integrar novas tecnologias emergentes para criar algo verdadeiramente impactante, divertido e memorável.
+                <br> <br></p>
+                <div class="badge badge-idea">Ainda é só uma ideia...</div>
+            </div>
+          </fieldset>
+        </div>
       </article>
     </section>
+  </main>
+  <script src="script.js"></script>
 </body>
-</main>
 <!-- BRUNO SCALERCIO MARQUES BORGES DA FONSECA - 1230112185-->
 </html>
