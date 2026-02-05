@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" data-theme="dark">
 
 <head>
   <meta charset="UTF-8">
@@ -12,9 +12,17 @@
 
 <body>
   <header>
-    <h1>Bruno Scalercio M. B. da Fonseca</h1>
+    <div class="header-inner">
+      <h1>Bruno Scalercio M. B. da Fonseca</h1>
+      <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="sr-only">Abrir menu</span>
+      </button>
+    </div>
     <nav>
-      <ul>
+      <ul id="primary-nav">
         <li><a href="index.html">Sobre</a></li>
         <li><a href="index2.html">Novidades</a></li>
         <li><a class="index2" href="index3.html">Contato</a></li>
@@ -35,7 +43,7 @@
       <hr>
       <p>
         <a target="_blank" class="contact-link" href="https://www.instagram.com/scar_rj/">
-          <img src="INSTA.png" alt="Instagram"> 
+          <img src="INSTA.png" alt="Instagram" loading="lazy" decoding="async"> 
           <span>@scar_rj</span>
         </a>
       </p>

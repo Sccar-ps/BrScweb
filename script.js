@@ -3,54 +3,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setupTabs();
     setupSmoothScroll();
     addEntranceAnimations();
-    setupThemeToggle();
+    setupMobileNav();
+    // Removed theme toggle
     setupMatrixRain();
 });
 
-// Sistema de Tema Escuro/Claro
-function setupThemeToggle() {
-    // Cria o botão de toggle
-    const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'theme-toggle';
-    toggleBtn.setAttribute('aria-label', 'Alternar tema');
-    toggleBtn.innerHTML = `
-        <svg class="moon-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
-        </svg>
-        <svg class="sun-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/>
-        </svg>
-    `;
-    document.body.appendChild(toggleBtn);
-
-    // Carrega tema salvo ou usa preferência do sistema
-    let savedTheme = null;
-    try {
-        savedTheme = localStorage.getItem('theme');
-    } catch (e) {
-        // localStorage não disponível (modo privado/bloqueado)
-    }
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    } else if (prefersDark) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-    }
-
-    // Toggle do tema
-    toggleBtn.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        document.documentElement.setAttribute('data-theme', newTheme);
-        try {
-            localStorage.setItem('theme', newTheme);
-        } catch (e) {
-            // localStorage não disponível
-        }
-    });
-}
+// Sistema de Tema Escuro/Claro - REMOVED
+/* function setupThemeToggle() { ... } */
 
 // Sistema de Abas (Tabs) para Projetos
 function setupTabs() {
@@ -107,6 +66,32 @@ function setupSmoothScroll() {
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
+            }
+        });
+    });
+}
+
+// Navegação mobile (menu colapsável)
+function setupMobileNav() {
+    const toggle = document.querySelector('.nav-toggle');
+    const navList = document.querySelector('nav ul');
+
+    if (!toggle || !navList) return;
+
+    const closeMenu = () => {
+        document.body.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    toggle.addEventListener('click', () => {
+        const isOpen = document.body.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    navList.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (document.body.classList.contains('nav-open')) {
+                closeMenu();
             }
         });
     });
@@ -214,17 +199,17 @@ function setupMatrixRain() {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         
         if (isDark) {
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.04)';
+            ctx.fillStyle = 'rgba(5, 6, 8, 0.06)';
         } else {
-            ctx.fillStyle = 'rgba(232, 238, 247, 0.04)';
+            ctx.fillStyle = 'rgba(245, 247, 251, 0.05)';
         }
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         // Cor das letras
         if (isDark) {
-            ctx.fillStyle = 'rgba(96, 165, 250, 0.8)';
+            ctx.fillStyle = 'rgba(210, 176, 106, 0.85)';
         } else {
-            ctx.fillStyle = 'rgba(37, 99, 235, 0.75)';
+            ctx.fillStyle = 'rgba(120, 93, 40, 0.7)';
         }
         ctx.font = 'bold ' + fontSize + 'px monospace';
         
