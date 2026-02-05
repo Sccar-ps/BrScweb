@@ -1,4 +1,4 @@
-// Script para interatividade modernizada
+// Script para interatividade
 document.addEventListener('DOMContentLoaded', () => {
     setupTabs();
     setupSmoothScroll();
@@ -7,9 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Removed theme toggle
     setupMatrixRain();
 });
-
-// Sistema de Tema Escuro/Claro - REMOVED
-/* function setupThemeToggle() { ... } */
 
 // Sistema de Abas (Tabs) para Projetos
 function setupTabs() {
@@ -38,7 +35,7 @@ function setupTabs() {
 
             const targetId = targetMap[href];
 
-            // Esconde todos os conteúdos
+            // Esconde os conteúdos
             contents.forEach(content => {
                 content.style.display = 'none';
                 content.classList.remove('active-content');
@@ -124,7 +121,7 @@ function setupMatrixRain() {
     document.body.insertBefore(canvas, document.body.firstChild);
     
     const ctx = canvas.getContext('2d');
-    if (!ctx) return; // Fallback se canvas não for suportado
+    if (!ctx) return; // Fallback se canvas não suportado
     
     // Configura tamanho
     function resize() {
