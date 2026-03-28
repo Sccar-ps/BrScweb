@@ -6,7 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bruno Scalercio - Novidades</title>
-  <link rel="stylesheet" href="style.css?v=20260205">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260327">
   <link rel="shortcut icon" href="favicon-16x16.ico" type="image/x-icon">
  </head>
 
@@ -30,13 +33,15 @@
     </nav>
   </header>
 
-  <main class="layout">
-    <aside class="intro-card">
+  <main class="layout novidades-layout">
+    <aside class="intro-card novidades-intro">
+      <div class="intro-icon">🚀</div>
       <p class="intro-title">Bem-vindo(a) à minha página pessoal!</p>
-      <p class="intro-text">&nbsp;&nbsp; Aqui você encontrará informações sobre mim, meus <u>projetos</u> e <u>atualizações</u>
-        sobre o meu <strong>futuro</strong>. <br> &nbsp;&nbsp; Este site será constantemente atualizado com novidades sobre as minhas conquistas,
-        mudanças na minha carreira e atualizações sobre os meus projetos atuais. <br> &nbsp;&nbsp; Sinta-se à vontade para explorar o
-        site e ficar por dentro das novidades. Obrigado por visitar e acompanhar a minha jornada!</p>
+      <p class="intro-text">Aqui você encontrará informações sobre mim, meus <u>projetos</u> e <u>atualizações</u>
+        sobre o meu <strong>futuro</strong>.</p>
+      <p class="intro-text">Este site será constantemente atualizado com novidades sobre as minhas conquistas,
+        mudanças na minha carreira e atualizações sobre os meus projetos atuais.</p>
+      <p class="intro-text">Sinta-se à vontade para explorar o site e ficar por dentro das novidades. Obrigado por visitar e acompanhar a minha jornada!</p>
     </aside>
     <section>
       <article>
@@ -44,40 +49,57 @@
           <fieldset>
             <legend>
               <ul class="ficha">
-                <li class="aba" id="ativo"><a href="index2.html">Projeto 1</a></li>
-                <li class="aba" id="index2"><a href="index2x1.html">Projeto 2</a></li>
-                <li class="aba" id="index2"><a href="index2x2.html">Projeto 3</a></li>
+                <li class="aba" id="ativo"><a href="#projeto1"><span class="aba-icon">🎓</span> Projeto 1</a></li>
+                <li class="aba" id="index2"><a href="#projeto2"><span class="aba-icon">🌍</span> Projeto 2</a></li>
+                <li class="aba" id="index2"><a href="#projeto3"><span class="aba-icon">🎮</span> Projeto 3</a></li>
               </ul>
             </legend>
             
             <div id="projeto1" class="tab-content active-content">
+              <div class="tab-header">
+                <h3>Ciência da Computação</h3>
+                <span class="tab-subtitle">Universidade Veiga de Almeida — 2023 a 2027</span>
+              </div>
               <p>
-                &nbsp;&nbsp; Atualmente, estou cursando Ciência da Computação na <strong>Universidade Veiga de Almeida</strong>, onde iniciei minha jornada em janeiro de 2023 com previsão de conclusão em janeiro de 2027. Para mim, a tecnologia é fascinante e estou ansioso para aprender mais sobre o campo da computação, programação e desenvolvimento de software.
-              <br> <br>
-              &nbsp; &nbsp; Durante o curso, tenho desenvolvido habilidades em diversas linguagens de programação como <strong>Python, Java, C, C++, C#, PHP e JavaScript</strong>. Estou trabalhando duro para ampliar meu conhecimento em áreas como inteligência artificial, machine learning e cibersegurança, participando de projetos práticos e atividades extracurriculares que me ajudam a aprimorar minhas habilidades técnicas. Estou determinado a construir uma carreira de sucesso nesse campo.
+                Atualmente, estou cursando Ciência da Computação na <strong>Universidade Veiga de Almeida</strong>, onde iniciei minha jornada em janeiro de 2023 com previsão de conclusão em janeiro de 2027. Para mim, a tecnologia é fascinante e estou ansioso para aprender mais sobre o campo da computação, programação e desenvolvimento de software.
               </p>
-              <div class="badge badge-progress">Em Desenvolvimento</div>
+              <p>
+                Durante o curso, tenho desenvolvido habilidades em diversas linguagens de programação como <strong>Python, Java, C, C++, C#, PHP e JavaScript</strong>. Estou trabalhando duro para ampliar meu conhecimento em áreas como inteligência artificial, machine learning e cibersegurança, participando de projetos práticos e atividades extracurriculares que me ajudam a aprimorar minhas habilidades técnicas. Estou determinado a construir uma carreira de sucesso nesse campo.
+              </p>
+              <div class="badge badge-progress">🔧 Em Desenvolvimento</div>
             </div>
 
             <div id="projeto2" class="tab-content">
+              <div class="tab-header">
+                <h3>Fluência em Inglês</h3>
+                <span class="tab-subtitle">Projeto Pessoal — Futuro</span>
+              </div>
               <p>
-                 &nbsp; &nbsp; No futuro, tenho o objetivo de aprender a falar inglês fluentemente como se fosse um projeto
+                No futuro, tenho o objetivo de aprender a falar inglês fluentemente como se fosse um projeto
                 pessoal. Para isso, pretendo me dedicar diariamente à prática da língua, buscando recursos como cursos online,
                 livros, filmes e séries em inglês.
-                <br><br> &nbsp;&nbsp; Também pretendo fazer intercâmbios e buscar oportunidades de imersão na
+              </p>
+              <p>
+                Também pretendo fazer intercâmbios e buscar oportunidades de imersão na
                 língua, para que possa aprimorar minha compreensão oral e habilidades de conversação. Acredito que o aprendizado
                 de uma nova língua é um processo constante e desafiador, mas estou determinado a alcançar esse objetivo e me
-                tornar fluente em inglês.</p>
-              <div class="badge badge-todo">Para Fazer</div>
+                tornar fluente em inglês.
+              </p>
+              <div class="badge badge-todo">📋 Para Fazer</div>
             </div>
 
             <div id="projeto3" class="tab-content">
-               <p>
-                &nbsp;&nbsp; Um dos meus grandes objetivos para o futuro é ingressar na indústria de Game Development e desenvolver o meu próprio jogo. Desde pequeno, os jogos sempre me fascinaram não apenas como entretenimento, mas como uma forma poderosa de contar histórias e criar experiências interativas únicas que conectam pessoas ao redor do mundo. Acredito que os games representam a união perfeita entre arte, narrativa envolvente e lógica de programação — uma combinação que me motiva a cada dia.
-                <br><br>
-                &nbsp;&nbsp; Estou ciente dos desafios técnicos que essa jornada envolve, desde o domínio de engines como Unity e Unreal até o design de mecânicas envolventes e sistemas de gameplay balanceados. Por isso, sigo me preparando constantemente, estudando as bases necessárias em programação, design de jogos e experiência do usuário para transformar essa visão em realidade. Meu objetivo é integrar novas tecnologias emergentes para criar algo verdadeiramente impactante, divertido e memorável.
-                <br> <br></p>
-                <div class="badge badge-idea">Ainda é só uma ideia...</div>
+              <div class="tab-header">
+                <h3>Game Development</h3>
+                <span class="tab-subtitle">Objetivo de Carreira — Longo Prazo</span>
+              </div>
+              <p>
+                Um dos meus grandes objetivos para o futuro é ingressar na indústria de Game Development e desenvolver o meu próprio jogo. Desde pequeno, os jogos sempre me fascinaram não apenas como entretenimento, mas como uma forma poderosa de contar histórias e criar experiências interativas únicas que conectam pessoas ao redor do mundo. Acredito que os games representam a união perfeita entre arte, narrativa envolvente e lógica de programação — uma combinação que me motiva a cada dia.
+              </p>
+              <p>
+                Estou ciente dos desafios técnicos que essa jornada envolve, desde o domínio de engines como Unity e Unreal até o design de mecânicas envolventes e sistemas de gameplay balanceados. Por isso, sigo me preparando constantemente, estudando as bases necessárias em programação, design de jogos e experiência do usuário para transformar essa visão em realidade. Meu objetivo é integrar novas tecnologias emergentes para criar algo verdadeiramente impactante, divertido e memorável.
+              </p>
+              <div class="badge badge-idea">💡 Ainda é só uma ideia...</div>
             </div>
           </fieldset>
         </div>
@@ -96,7 +118,7 @@
       </a>
     </div>
   </footer>
-  <script src="script.js?v=20260205"></script>
+  <script src="script.js?v=20260327"></script>
 </body>
 <!-- BRUNO SCALERCIO MARQUES BORGES DA FONSECA - 1230112185-->
 </html>
