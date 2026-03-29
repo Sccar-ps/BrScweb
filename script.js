@@ -1,7 +1,7 @@
-// Script para interatividade — versão melhorada com transições fluidas
+// Script para interatividade — versão otimizada
 document.addEventListener('DOMContentLoaded', () => {
     setupScrollProgress();
-    setupHeaderShrink();
+    setupConsolidatedScroll();
     setupTabs();
     setupSmoothScroll();
     addEntranceAnimations();
@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMatrixRain();
     setupPageTransitions();
     setupScrollTopButton();
-    setupParallax();
     setupScrollHint();
     setupStaggeredCards();
 });
@@ -19,30 +18,66 @@ function setupScrollProgress() {
     const bar = document.createElement('div');
     bar.className = 'scroll-progress';
     document.body.prepend(bar);
-
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
+    // Updates happen in consolidated scroll handler
+    bar._update = () => {
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         if (docHeight > 0) {
-            bar.style.width = (scrollTop / docHeight * 100) + '%';
+            bar.style.width = (window.scrollY / docHeight * 100) + '%';
         }
-    }, { passive: true });
+    };
 }
 
-// ─── Header shrink on scroll ────────────────────────────
-function setupHeaderShrink() {
+// ─── Consolidated Scroll Handler ────────────────────────
+function setupConsolidatedScroll() {
     const header = document.querySelector('header');
-    if (!header) return;
+    const scrollBar = document.querySelector('.scroll-progress');
+    const scrollTopBtn = document.querySelector('.scroll-top');
+    const scrollHint = document.querySelector('.scroll-hint');
+    const heroRight = document.querySelector('.hero-right');
+    const heroLeft = document.querySelector('.hero-left');
+    const hasParallax = heroRight || heroLeft;
 
     let ticking = false;
+
     window.addEventListener('scroll', () => {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                header.classList.toggle('scrolled', window.scrollY > 60);
-                ticking = false;
-            });
-            ticking = true;
-        }
+        if (ticking) return;
+        ticking = true;
+
+        requestAnimationFrame(() => {
+            const scrollY = window.scrollY;
+
+            // Header shrink
+            if (header) {
+                header.classList.toggle('scrolled', scrollY > 60);
+            }
+
+            // Scroll progress bar
+            if (scrollBar && scrollBar._update) {
+                scrollBar._update();
+            }
+
+            // Scroll-to-top button
+            if (scrollTopBtn) {
+                scrollTopBtn.classList.toggle('visible', scrollY > 400);
+            }
+
+            // Scroll hint visibility
+            if (scrollHint) {
+                scrollHint.classList.toggle('hidden', scrollY > 100);
+            }
+
+            // Parallax (only when hero is in view)
+            if (hasParallax && scrollY < window.innerHeight) {
+                if (heroRight) {
+                    heroRight.style.transform = `translateY(${scrollY * 0.06}px)`;
+                }
+                if (heroLeft) {
+                    heroLeft.style.transform = `translateY(${scrollY * 0.03}px)`;
+                }
+            }
+
+            ticking = false;
+        });
     }, { passive: true });
 }
 
@@ -50,7 +85,6 @@ function setupHeaderShrink() {
 function setupTabs() {
     const tabs = document.querySelectorAll('.ficha .aba a');
     const contents = document.querySelectorAll('.tab-content');
-
     if (contents.length === 0) return;
 
     tabs.forEach(tab => {
@@ -61,24 +95,14 @@ function setupTabs() {
             tab.parentElement.setAttribute('id', 'ativo');
 
             const href = tab.getAttribute('href');
-            let targetId = href.startsWith('#') ? href.substring(1) : null;
-            
-            // Fallback for old file-based links if they still exist anywhere
-            if (!targetId) {
-                const mapOldLinks = {
-                    'index2.html': 'projeto1',
-                    'index2x1.html': 'projeto2',
-                    'index2x2.html': 'projeto3'
-                };
-                targetId = mapOldLinks[href.split('/').pop()];
-            }
+            const targetId = href.startsWith('#') ? href.substring(1) : null;
+            if (!targetId) return;
 
-            // Crossfade: fade out active, then fade in target
             const activeContent = document.querySelector('.tab-content.active-content');
             
             if (activeContent && activeContent.id !== targetId) {
                 activeContent.style.opacity = '0';
-                activeContent.style.transform = 'translateY(10px)';
+                activeContent.style.transform = 'translateY(8px)';
                 
                 setTimeout(() => {
                     contents.forEach(c => {
@@ -90,7 +114,7 @@ function setupTabs() {
                     if (target) {
                         target.style.display = 'block';
                         target.style.opacity = '0';
-                        target.style.transform = 'translateY(10px)';
+                        target.style.transform = 'translateY(8px)';
                         
                         requestAnimationFrame(() => {
                             requestAnimationFrame(() => {
@@ -100,7 +124,7 @@ function setupTabs() {
                             });
                         });
                     }
-                }, 250);
+                }, 200);
             } else if (!activeContent) {
                 const target = document.getElementById(targetId);
                 if (target) {
@@ -118,9 +142,10 @@ function setupTabs() {
 function setupSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            if (this.getAttribute('href') !== '#') {
+            const href = this.getAttribute('href');
+            if (href !== '#') {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const target = document.querySelector(href);
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
@@ -133,7 +158,6 @@ function setupSmoothScroll() {
 function setupMobileNav() {
     const toggle = document.querySelector('.nav-toggle');
     const navList = document.querySelector('nav ul');
-
     if (!toggle || !navList) return;
 
     const closeMenu = () => {
@@ -147,26 +171,21 @@ function setupMobileNav() {
     });
 
     navList.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            if (document.body.classList.contains('nav-open')) {
-                closeMenu();
-            }
-        });
+        link.addEventListener('click', closeMenu);
     });
 
-    // Close menu on outside click
     document.addEventListener('click', (e) => {
-        if (document.body.classList.contains('nav-open') 
-            && !e.target.closest('nav') 
+        if (document.body.classList.contains('nav-open')
+            && !e.target.closest('nav')
             && !e.target.closest('.nav-toggle')) {
             closeMenu();
         }
     });
 }
 
-// ─── Entrance animations (staggered) ───────────────────
+// ─── Entrance animations ────────────────────────────────
 function addEntranceAnimations() {
-    const elements = document.querySelectorAll('section, .barra, fieldset, .intro-card, .panel');
+    const elements = document.querySelectorAll('section:not(.hero-full), .barra, fieldset, .intro-card, .panel');
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -175,29 +194,34 @@ function addEntranceAnimations() {
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
     elements.forEach(el => {
         el.classList.add('fade-up-hidden');
         observer.observe(el);
     });
 
-    // Hero elements — slide in left/right
+    // Hero elements — staggered slide in
     const heroLeft = document.querySelector('.hero-left');
     const heroRight = document.querySelector('.hero-right');
+
     if (heroLeft) {
         heroLeft.classList.add('slide-in-left');
-        setTimeout(() => heroLeft.classList.add('visible'), 200);
+        requestAnimationFrame(() => {
+            setTimeout(() => heroLeft.classList.add('visible'), 150);
+        });
     }
     if (heroRight) {
         heroRight.classList.add('slide-in-right');
-        setTimeout(() => heroRight.classList.add('visible'), 400);
+        requestAnimationFrame(() => {
+            setTimeout(() => heroRight.classList.add('visible'), 350);
+        });
     }
 }
 
 // ─── Staggered cards animation ──────────────────────────
 function setupStaggeredCards() {
-    const grids = document.querySelectorAll('.services-grid, .tech-grid');
+    const grids = document.querySelectorAll('.services-grid, .tech-grid, .contact-grid');
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -205,8 +229,8 @@ function setupStaggeredCards() {
                 const children = entry.target.children;
                 Array.from(children).forEach((child, i) => {
                     child.style.opacity = '0';
-                    child.style.transform = 'translateY(20px)';
-                    child.style.transition = `opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.08}s, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.08}s`;
+                    child.style.transform = 'translateY(16px)';
+                    child.style.transition = `opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06}s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.06}s`;
                     requestAnimationFrame(() => {
                         requestAnimationFrame(() => {
                             child.style.opacity = '1';
@@ -224,28 +248,17 @@ function setupStaggeredCards() {
 
 // ─── Page transitions ───────────────────────────────────
 function setupPageTransitions() {
-    // Intercept local navigation links for smooth page transitions
     document.querySelectorAll('a').forEach(link => {
         const href = link.getAttribute('href');
         if (!href) return;
-        // Only intercept local HTML links (not external, not anchors, not javascript)
         if (href.startsWith('http') || href.startsWith('#') || href.startsWith('javascript') || href.startsWith('mailto') || href.startsWith('tel') || link.target === '_blank') return;
 
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            
-            // Save matrix state before transition
-            try {
-                const canvas = document.getElementById('matrix-canvas');
-                if (canvas && canvas._matrixDrops) {
-                    sessionStorage.setItem('matrixDrops', JSON.stringify(canvas._matrixDrops));
-                }
-            } catch (err) { /* ignore */ }
-
             document.body.classList.add('page-exit');
             setTimeout(() => {
                 window.location.href = href;
-            }, 300);
+            }, 280);
         });
     });
 }
@@ -258,39 +271,10 @@ function setupScrollTopButton() {
     btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
     document.body.appendChild(btn);
 
-    window.addEventListener('scroll', () => {
-        btn.classList.toggle('visible', window.scrollY > 400);
-    }, { passive: true });
-
     btn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-}
-
-
-
-// ─── Parallax on scroll ─────────────────────────────────
-function setupParallax() {
-    const heroRight = document.querySelector('.hero-right');
-    const heroLeft = document.querySelector('.hero-left');
-    if (!heroRight && !heroLeft) return;
-
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                const scrollY = window.scrollY;
-                if (heroRight) {
-                    heroRight.style.transform = `translateY(${scrollY * 0.08}px)`;
-                }
-                if (heroLeft) {
-                    heroLeft.style.transform = `translateY(${scrollY * 0.04}px)`;
-                }
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }, { passive: true });
+    // Visibility toggled by consolidated scroll handler
 }
 
 // ─── Scroll hint on hero ────────────────────────────────
@@ -302,17 +286,10 @@ function setupScrollHint() {
     hint.className = 'scroll-hint';
     hint.innerHTML = '<span>Scroll</span><span class="scroll-hint-arrow"></span>';
     hero.appendChild(hint);
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            hint.classList.add('hidden');
-        } else {
-            hint.classList.remove('hidden');
-        }
-    }, { passive: true });
+    // Visibility toggled by consolidated scroll handler
 }
 
-// ─── Matrix Rain (otimizada com requestAnimationFrame) ──
+// ─── Matrix Rain (otimizada) ────────────────────────────
 function setupMatrixRain() {
     const canvas = document.createElement('canvas');
     canvas.id = 'matrix-canvas';
@@ -321,22 +298,15 @@ function setupMatrixRain() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const isMobile = window.innerWidth <= 768;
     let columns, drops;
-    const fontSize = 14;
+    const fontSize = isMobile ? 16 : 14; // Larger = fewer columns on mobile
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+-=[]{}|;:,.<>?';
     const charArray = chars.split('');
+    let animId;
 
     function initDrops(cols) {
         const arr = [];
-        let savedDrops = null;
-        try { savedDrops = sessionStorage.getItem('matrixDrops'); } catch (e) { /* ignore */ }
-
-        if (savedDrops) {
-            try {
-                const parsed = JSON.parse(savedDrops);
-                if (parsed.length === cols) return parsed;
-            } catch (e) { /* ignore */ }
-        }
         for (let i = 0; i < cols; i++) {
             arr[i] = Math.random() * -100;
         }
@@ -357,52 +327,37 @@ function setupMatrixRain() {
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(resize, 150);
+        resizeTimer = setTimeout(resize, 200);
     });
 
-    // Store drops on canvas element for page transition access
-    canvas._matrixDrops = drops;
-
-    window.addEventListener('beforeunload', () => {
-        try { sessionStorage.setItem('matrixDrops', JSON.stringify(drops)); } catch (e) { /* ignore */ }
+    // Pause when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            cancelAnimationFrame(animId);
+        } else {
+            lastDraw = 0;
+            animId = requestAnimationFrame(draw);
+        }
     });
 
-    document.querySelectorAll('nav a').forEach(link => {
-        link.addEventListener('click', () => {
-            try { sessionStorage.setItem('matrixDrops', JSON.stringify(drops)); } catch (e) { /* ignore */ }
-        });
-    });
-
-    // Throttled drawing with requestAnimationFrame
     let lastDraw = 0;
-    const drawInterval = 50; // ms between frames
+    const drawInterval = isMobile ? 80 : 55; // Slower frame rate on mobile
 
     function draw(timestamp) {
-        requestAnimationFrame(draw);
-
+        animId = requestAnimationFrame(draw);
         if (timestamp - lastDraw < drawInterval) return;
         lastDraw = timestamp;
 
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-
-        ctx.fillStyle = isDark ? 'rgba(5, 6, 8, 0.06)' : 'rgba(245, 247, 251, 0.05)';
+        ctx.fillStyle = 'rgba(5, 6, 8, 0.06)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.font = 'bold ' + fontSize + 'px monospace';
+        ctx.font = fontSize + 'px monospace';
 
         for (let i = 0; i < drops.length; i++) {
             const char = charArray[Math.floor(Math.random() * charArray.length)];
             const x = i * fontSize;
             const y = drops[i] * fontSize;
-
-            // Slight color variation for depth
             const brightness = 0.7 + Math.random() * 0.3;
-            if (isDark) {
-                ctx.fillStyle = `rgba(139, 92, 246, ${brightness * 0.85})`;
-            } else {
-                ctx.fillStyle = `rgba(99, 102, 241, ${brightness * 0.7})`;
-            }
-
+            ctx.fillStyle = `rgba(139, 92, 246, ${brightness * 0.85})`;
             ctx.fillText(char, x, y);
 
             if (y > canvas.height && Math.random() > 0.975) {
@@ -410,10 +365,7 @@ function setupMatrixRain() {
             }
             drops[i] += 0.5;
         }
-
-        // Keep reference updated
-        canvas._matrixDrops = drops;
     }
 
-    requestAnimationFrame(draw);
+    animId = requestAnimationFrame(draw);
 }
