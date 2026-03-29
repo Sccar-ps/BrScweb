@@ -1,0 +1,227 @@
+.contact-section,
+#contato {
+  margin: 0;
+}
+
+.contact-section .section-panel__title,
+#contato h2 {
+  color: var(--text);
+}
+
+.contact-grid,
+.contact-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.contact-card,
+.contact-list__card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: linear-gradient(145deg, var(--surface-muted) 0%, rgba(13, 15, 20, 0.8) 100%);
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-card:hover,
+.contact-list__card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  background: rgba(99, 102, 241, 0.04);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.contact-card-icon,
+.contact-list__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(99, 102, 241, 0.02) 100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-card:hover .contact-card-icon,
+.contact-list__card:hover .contact-list__icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.contact-card-info,
+.contact-list__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contact-card-label,
+.contact-list__label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.contact-card-value,
+.contact-list__value {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+@media (min-width: 1200px) {
+  .contact-grid,
+  .contact-list {
+    gap: 20px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .contact-section,
+  #contato {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .contact-grid,
+  .contact-list {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .contact-card,
+  .contact-list__card {
+    width: 100%;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+
+  .contact-card-value,
+  .contact-list__value {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .contact-section,
+  #contato {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    box-sizing: border-box;
+  }
+
+  .contact-grid,
+  .contact-list {
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    justify-items: center;
+  }
+
+  .contact-card,
+  .contact-list__card {
+    width: 100%;
+    max-width: 100%;
+    padding: 16px;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+
+  .contact-card-value,
+  .contact-list__value {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .contact-card-icon,
+  .contact-list__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .contact-card,
+  .contact-list__card {
+    padding: 14px 14px;
+  }
+
+  .contact-card-icon,
+  .contact-list__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .contact-card-icon svg,
+  .contact-list__icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .contact-card-value,
+  .contact-list__value {
+    font-size: 0.9rem;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .contact-section,
+  #contato {
+    padding: 20px 12px;
+  }
+
+  .contact-card,
+  .contact-list__card {
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .contact-card-icon,
+  .contact-list__icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .contact-card-icon svg,
+  .contact-list__icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .contact-card-value,
+  .contact-list__value {
+    font-size: 0.85rem;
+  }
+
+  .contact-card-label,
+  .contact-list__label {
+    font-size: 0.65rem;
+  }
+
+  .contact-section .contact-card-icon,
+  .contact-section .contact-list__icon,
+  #contato .contact-card-icon,
+  #contato .contact-list__icon {
+    width: 42px;
+    height: 42px;
+  }
+}

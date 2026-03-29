@@ -1,4 +1,3 @@
-// Script para interatividade — versão otimizada
 document.addEventListener('DOMContentLoaded', () => {
     setupScrollProgress();
     setupConsolidatedScroll();
@@ -29,12 +28,12 @@ function setupScrollProgress() {
 
 // ─── Consolidated Scroll Handler ────────────────────────
 function setupConsolidatedScroll() {
-    const header = document.querySelector('header');
+    const header = document.querySelector('.site-header, header');
     const scrollBar = document.querySelector('.scroll-progress');
     const scrollTopBtn = document.querySelector('.scroll-top');
     const scrollHint = document.querySelector('.scroll-hint');
-    const heroRight = document.querySelector('.hero-right');
-    const heroLeft = document.querySelector('.hero-left');
+    const heroRight = document.querySelector('.hero-section__media, .hero-right');
+    const heroLeft = document.querySelector('.hero-section__content, .hero-left');
     const hasParallax = heroRight || heroLeft;
 
     let ticking = false;
@@ -83,22 +82,29 @@ function setupConsolidatedScroll() {
 
 // ─── Tabs com crossfade ─────────────────────────────────
 function setupTabs() {
-    const tabs = document.querySelectorAll('.ficha .aba a');
-    const contents = document.querySelectorAll('.tab-content');
+    const tabs = document.querySelectorAll('.tabs__trigger, .ficha .aba a');
+    const tabItems = document.querySelectorAll('.tabs__item, .ficha .aba');
+    const contents = document.querySelectorAll('.tabs__panel, .tab-content');
     if (contents.length === 0) return;
 
     tabs.forEach(tab => {
         tab.addEventListener('click', (e) => {
             e.preventDefault();
 
-            tabs.forEach(t => t.parentElement.removeAttribute('id'));
-            tab.parentElement.setAttribute('id', 'ativo');
+            tabItems.forEach(item => item.classList.remove('is-active'));
+            tabs.forEach(trigger => trigger.setAttribute('aria-selected', 'false'));
+
+            const tabItem = tab.closest('.tabs__item, .aba');
+            if (tabItem) {
+                tabItem.classList.add('is-active');
+            }
+            tab.setAttribute('aria-selected', 'true');
 
             const href = tab.getAttribute('href');
             const targetId = href.startsWith('#') ? href.substring(1) : null;
             if (!targetId) return;
 
-            const activeContent = document.querySelector('.tab-content.active-content');
+            const activeContent = document.querySelector('.tabs__panel.is-active, .tab-content.active-content');
             
             if (activeContent && activeContent.id !== targetId) {
                 activeContent.style.opacity = '0';
@@ -108,10 +114,13 @@ function setupTabs() {
                     contents.forEach(c => {
                         c.style.display = 'none';
                         c.classList.remove('active-content');
+                        c.classList.remove('is-active');
+                        c.hidden = true;
                     });
 
                     const target = document.getElementById(targetId);
                     if (target) {
+                        target.hidden = false;
                         target.style.display = 'block';
                         target.style.opacity = '0';
                         target.style.transform = 'translateY(8px)';
@@ -119,6 +128,7 @@ function setupTabs() {
                         requestAnimationFrame(() => {
                             requestAnimationFrame(() => {
                                 target.classList.add('active-content');
+                                target.classList.add('is-active');
                                 target.style.opacity = '';
                                 target.style.transform = '';
                             });
@@ -128,9 +138,11 @@ function setupTabs() {
             } else if (!activeContent) {
                 const target = document.getElementById(targetId);
                 if (target) {
+                    target.hidden = false;
                     target.style.display = 'block';
                     requestAnimationFrame(() => {
                         target.classList.add('active-content');
+                        target.classList.add('is-active');
                     });
                 }
             }
@@ -142,6 +154,10 @@ function setupTabs() {
 function setupSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
+            if (this.matches('.tabs__trigger') || this.closest('.tabs__list, .ficha')) {
+                return;
+            }
+
             const href = this.getAttribute('href');
             if (href !== '#') {
                 e.preventDefault();
@@ -156,8 +172,8 @@ function setupSmoothScroll() {
 
 // ─── Mobile nav ─────────────────────────────────────────
 function setupMobileNav() {
-    const toggle = document.querySelector('.nav-toggle');
-    const navList = document.querySelector('nav ul');
+    const toggle = document.querySelector('.site-header__menu-toggle, .nav-toggle');
+    const navList = document.querySelector('.site-header__nav-list, nav ul');
     if (!toggle || !navList) return;
 
     const closeMenu = () => {
@@ -176,8 +192,8 @@ function setupMobileNav() {
 
     document.addEventListener('click', (e) => {
         if (document.body.classList.contains('nav-open')
-            && !e.target.closest('nav')
-            && !e.target.closest('.nav-toggle')) {
+            && !e.target.closest('nav, .site-header__nav')
+            && !e.target.closest('.nav-toggle, .site-header__menu-toggle')) {
             closeMenu();
         }
     });
@@ -185,7 +201,7 @@ function setupMobileNav() {
 
 // ─── Entrance animations ────────────────────────────────
 function addEntranceAnimations() {
-    const elements = document.querySelectorAll('section:not(.hero-full), .barra, fieldset, .intro-card, .panel');
+    const elements = document.querySelectorAll('section:not(.hero-full):not(.hero-section), .barra, fieldset, .tabs-card, .intro-card, .updates-intro, .panel, .section-panel');
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -202,8 +218,8 @@ function addEntranceAnimations() {
     });
 
     // Hero elements — staggered slide in
-    const heroLeft = document.querySelector('.hero-left');
-    const heroRight = document.querySelector('.hero-right');
+    const heroLeft = document.querySelector('.hero-section__content, .hero-left');
+    const heroRight = document.querySelector('.hero-section__media, .hero-right');
 
     if (heroLeft) {
         heroLeft.classList.add('slide-in-left');
@@ -221,7 +237,7 @@ function addEntranceAnimations() {
 
 // ─── Staggered cards animation ──────────────────────────
 function setupStaggeredCards() {
-    const grids = document.querySelectorAll('.services-grid, .tech-grid, .contact-grid');
+    const grids = document.querySelectorAll('.services-grid, .certification-grid, .tech-grid, .skill-grid, .contact-grid, .contact-list');
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -279,11 +295,11 @@ function setupScrollTopButton() {
 
 // ─── Scroll hint on hero ────────────────────────────────
 function setupScrollHint() {
-    const hero = document.querySelector('.hero-full');
+    const hero = document.querySelector('.hero-section, .hero-full');
     if (!hero) return;
 
     const hint = document.createElement('div');
-    hint.className = 'scroll-hint';
+    hint.className = 'scroll-hint hero-section__scroll-hint';
     hint.innerHTML = '<span>Scroll</span><span class="scroll-hint-arrow"></span>';
     hero.appendChild(hint);
     // Visibility toggled by consolidated scroll handler
