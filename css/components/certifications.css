@@ -17,8 +17,8 @@
 
 .cert--featured {
   grid-column: span 2;
-  border-color: rgb(129 140 248 / 0.35);
-  background: linear-gradient(135deg, rgb(99 102 241 / 0.16), rgb(168 85 247 / 0.06) 60%, var(--surface));
+  border-color: rgb(var(--primary-rgb) / 0.4);
+  background: linear-gradient(135deg, rgb(var(--primary-rgb) / 0.14), rgb(var(--primary-rgb) / 0.04) 60%, var(--surface));
 }
 
 .cert__top {
@@ -35,7 +35,7 @@
   width: 2.75rem;
   height: 2.75rem;
   border-radius: var(--radius-sm);
-  background: rgb(99 102 241 / 0.14);
+  background: rgb(var(--primary-rgb) / 0.14);
   color: var(--primary-strong);
 }
 

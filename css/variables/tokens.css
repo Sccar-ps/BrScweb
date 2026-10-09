@@ -1,23 +1,21 @@
 :root {
   color-scheme: dark;
 
-  /* Color */
-  --bg: #07070c;
-  --surface: rgb(255 255 255 / 0.035);
-  --surface-hover: rgb(255 255 255 / 0.065);
-  --border: rgb(255 255 255 / 0.09);
-  --border-strong: rgb(255 255 255 / 0.18);
-  --text: #f5f5f7;
-  --text-muted: #a9a9b8;
-  --text-soft: #8a8a99;
-  --primary: #6366f1;
-  --primary-strong: #a5b4fc;
-  --accent: #a78bfa;
-  --cyan: #22d3ee;
-  --success: #34d399;
-  --warning: #fbbf24;
-  --gradient-brand: linear-gradient(120deg, #a5b4fc 0%, #c4b5fd 45%, #67e8f9 100%);
-  --gradient-button: linear-gradient(135deg, #5b5fee, #7c3aed);
+  /* Color: amarelo, preto e branco */
+  --bg: #000000;
+  --surface: rgb(255 255 255 / 0.04);
+  --surface-hover: rgb(255 255 255 / 0.07);
+  --border: rgb(255 255 255 / 0.1);
+  --border-strong: rgb(255 255 255 / 0.2);
+  --text: #ffffff;
+  --text-muted: #b3b3b3;
+  --text-soft: #8c8c8c;
+  --primary: #e6bc02;
+  --primary-rgb: 230 188 2;
+  --primary-strong: #f7d33a;
+  --primary-ink: #0a0a0a;
+  --gradient-brand: linear-gradient(120deg, #fff1a8 0%, #e6bc02 55%, #c99d00 100%);
+  --gradient-button: linear-gradient(135deg, #f2c91a, #e6bc02);
 
   /* Typography */
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;

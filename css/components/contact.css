@@ -5,7 +5,6 @@
 }
 
 .contact-card {
-  --brand: var(--primary);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -15,7 +14,7 @@
 
 .contact-card:hover {
   transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+  border-color: rgb(var(--primary-rgb) / 0.55);
 }
 
 .contact-card__icon {
@@ -25,8 +24,8 @@
   width: 3rem;
   height: 3rem;
   border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--brand) 18%, transparent);
-  color: color-mix(in srgb, var(--brand) 70%, white);
+  background: rgb(var(--primary-rgb) / 0.14);
+  color: var(--primary-strong);
 }
 
 .contact-card__icon .icon {

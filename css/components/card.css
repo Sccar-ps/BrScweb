@@ -14,7 +14,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(22rem circle at var(--mx, 50%) var(--my, 0%), rgb(129 140 248 / 0.16), transparent 70%);
+  background: radial-gradient(22rem circle at var(--mx, 50%) var(--my, 0%), rgb(var(--primary-rgb) / 0.13), transparent 70%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -55,7 +55,7 @@
   width: 2.75rem;
   height: 2.75rem;
   border-radius: var(--radius-sm);
-  background: rgb(99 102 241 / 0.14);
+  background: rgb(var(--primary-rgb) / 0.14);
   color: var(--primary-strong);
 }
 

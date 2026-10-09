@@ -12,19 +12,27 @@
   pointer-events: none;
 }
 
-/* Botão voltar ao topo */
-.scroll-top {
-  position: fixed;
-  right: clamp(1rem, 3vw, 2rem);
+/* Botão voltar ao topo: a âncora é "sticky" e fica no fim do <main>, então o botão
+   acompanha a rolagem mas para antes do rodapé em vez de cobri-lo */
+.scroll-top-anchor {
+  position: sticky;
   bottom: clamp(1rem, 3vw, 2rem);
   z-index: 40;
+  height: 0;
+  pointer-events: none;
+}
+
+.scroll-top {
+  position: absolute;
+  right: 0;
+  bottom: 0;
   display: grid;
   place-items: center;
   width: 3rem;
   height: 3rem;
   border: 1px solid var(--border-strong);
   border-radius: 50%;
-  background: rgb(12 12 20 / 0.8);
+  background: rgb(0 0 0 / 0.8);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   color: var(--text);
@@ -38,6 +46,7 @@
   opacity: 1;
   visibility: visible;
   transform: none;
+  pointer-events: auto;
 }
 
 .scroll-top:hover {
